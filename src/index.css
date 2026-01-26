@@ -1,0 +1,47 @@
+@import url("https://fonts.googleapis.com/css2?family=Red+Hat+Text:wght@300..700&display=swap");
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+
+  --font-Red-Hat-Text: "Red Hat Text", sans-serif;
+
+  --color-red: hsl(14, 86%, 42%);
+  --color-green: hsl(159, 69%, 38%);
+  --color-rose-50: hsl(20, 50%, 98%);
+  --color-rose-100: hsl(13, 31%, 94%);
+  --color-rose-300: hsl(14, 25%, 72%);
+  --color-rose-400: hsl(7, 20%, 60%);
+  --color-rose-500: hsl(12, 20%, 44%);
+  --color-rose-900: hsl(14, 65%, 9%);
+}
+
+:root {
+  --radius: 0.625rem;
+}
+
+.dark {
+  --color-red: hsl(14, 86%, 42%);
+  --color-green: hsl(159, 69%, 38%);
+  --color-rose-50: hsl(20, 50%, 98%);
+  --color-rose-100: hsl(13, 31%, 94%);
+  --color-rose-300: hsl(14, 25%, 72%);
+  --color-rose-400: hsl(7, 20%, 60%);
+  --color-rose-500: hsl(12, 20%, 44%);
+  --color-rose-900: hsl(14, 65%, 9%);
+}
+
+@layer base {
+  body {
+    @apply bg-rose-100 font-Red-Hat-Text;
+  }
+}
