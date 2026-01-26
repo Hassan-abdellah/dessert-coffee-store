@@ -1,30 +1,26 @@
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/Components/ui/card";
-
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useState } from "react";
+import EmptyCart from "@/assets/images/illustration-empty-cart.svg";
 const Cart = () => {
+  const [products, setProducts] = useState<number>(0);
   return (
-    <aside>
-      <Card>
-        <CardHeader>
-          <CardTitle>Card Title</CardTitle>
-          <CardDescription>Card Description</CardDescription>
-          <CardAction>Card Action</CardAction>
-        </CardHeader>
-        <CardContent>
-          <p>Card Content</p>
-        </CardContent>
-        <CardFooter>
-          <p>Card Footer</p>
-        </CardFooter>
-      </Card>
-    </aside>
+    <Card className="bg-white border-0">
+      <CardHeader>
+        <CardTitle className="text-red font-bold">
+          Your Cart ({products})
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <img
+          src={EmptyCart}
+          alt="Empty Cart Illustration"
+          className="mx-auto"
+        />
+        <p className="text-rose-400 text-base font-semibold text-center mt-4">
+          Your added items will appear here
+        </p>
+      </CardContent>
+    </Card>
   );
 };
 
