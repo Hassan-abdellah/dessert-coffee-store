@@ -1,25 +1,79 @@
-import type { productType } from "@/types";
+import type { cartItemType, productType } from "@/types";
 import ProductImage from "./ProductImage";
-import AddToCartIcon from "@/assets/images/icon-add-to-cart.svg";
+import { useShopingCart } from "@/stores/useStore";
+import { useMemo } from "react";
+import DecreaseCartItemSVG from "../Icons/DecreaseCartItemSVG";
+import IncreaseCartItemSVG from "../Icons/IncreaseCartItemSVG";
+import AddToCartSVG from "../Icons/AddToCartSVG";
+import clsx from "clsx";
 
 const ProductCard = ({ dessert }: { dessert: productType }) => {
+  const { cartItems, addCartItem, updateCartItem } = useShopingCart();
+
+  // check if the item is already in the cart
+  const isItemInCart: cartItemType | undefined = useMemo(() => {
+    return cartItems.find((item) => item.item.name === dessert.name);
+  }, [cartItems, dessert.name]);
+
   return (
     <div className="rounded-lg">
       {/* product image */}
-      <div className="relative">
+      <div
+        className={clsx(
+          "relative rounded-md",
+          isItemInCart ? "border-2 border-red" : "",
+        )}
+      >
         <ProductImage
           src={dessert.image}
           alt={dessert.name}
           className="w-82 h-64 rounded-md"
         />
 
-        <button
-          type="button"
-          className="absolute left-1/2 bottom-0 -translate-x-1/2 translate-y-1/2 text-rose-900 font-semibold cursor-pointer border border-red rounded-3xl px-4 py-2 bg-rose-50 flex items-center gap-1 transition-colors hover:text-red"
-        >
-          <img src={AddToCartIcon} alt="Add to Cart" className="w-4 h-4 mr-2" />
-          Add to Cart
-        </button>
+        {isItemInCart ? (
+          <div className="absolute left-1/2 bottom-0 -translate-x-1/2 translate-y-1/2 text-white font-semibold cursor-pointer border border-red rounded-3xl px-3 py-2 bg-red flex items-center justify-between w-36">
+            <button
+              type="button"
+              aria-label="decrease quantity"
+              className="group cursor-pointer rounded-full border-2 border-white w-5 h-5 flex items-center justify-center hover:bg-white transition-colors"
+              onClick={() =>
+                updateCartItem({
+                  productName: dessert.name,
+                  quantity: isItemInCart.quantity - 1,
+                })
+              }
+            >
+              <DecreaseCartItemSVG pathClassNames="fill-white transition-colors group-hover:fill-red" />
+            </button>
+
+            <span className="text-white font-bold">
+              {isItemInCart?.quantity}
+            </span>
+
+            <button
+              type="button"
+              aria-label="increase quantity"
+              className="group cursor-pointer rounded-full border-2 border-white w-5 h-5 flex items-center justify-center hover:bg-white transition-colors"
+              onClick={() =>
+                updateCartItem({
+                  productName: dessert.name,
+                  quantity: isItemInCart.quantity + 1,
+                })
+              }
+            >
+              <IncreaseCartItemSVG pathClassNames="fill-white transition-colors group-hover:fill-red" />
+            </button>
+          </div>
+        ) : (
+          <button
+            type="button"
+            className="group absolute left-1/2 bottom-0 -translate-x-1/2 translate-y-1/2 text-rose-900 font-semibold cursor-pointer border border-red rounded-3xl px-4 py-2 bg-rose-50 flex items-center gap-1 transition-all hover:text-white hover:bg-red hover:drop-shadow-red hover:drop-shadow-sm"
+            onClick={() => addCartItem({ item: dessert, quantity: 1 })}
+          >
+            <AddToCartSVG classNames="fill-red transition-colors group-hover:fill-white" />
+            Add to Cart
+          </button>
+        )}
       </div>
 
       {/* product content */}

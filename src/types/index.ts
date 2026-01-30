@@ -11,3 +11,8 @@ export type productType = {
   category: string;
   price: number;
 };
+
+export interface cartItemType {
+  item: productType;
+  quantity: number;
+}
