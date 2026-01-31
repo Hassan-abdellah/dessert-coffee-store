@@ -20,14 +20,14 @@ const ProductCard = ({ dessert }: { dessert: productType }) => {
       {/* product image */}
       <div
         className={clsx(
-          "relative rounded-md",
+          "relative rounded-md w-72 h-62",
           isItemInCart ? "border-2 border-red" : "",
         )}
       >
         <ProductImage
           src={dessert.image}
           alt={dessert.name}
-          className="w-82 h-64 rounded-md"
+          className="w-full h-full rounded-md"
         />
 
         {isItemInCart ? (
