@@ -7,6 +7,7 @@ import CarbonIcon from "@/assets/images/icon-carbon-neutral.svg";
 import ConfirmOrderModal from "./ConfirmOrderModal";
 import DeleteAllItemsModal from "./DeleteAllItemsModal";
 import DeleteCartItemModal from "./DeleteCartItemModal";
+import clsx from "clsx";
 
 const Cart = () => {
   const { cartItems } = useShopingCart();
@@ -17,7 +18,12 @@ const Cart = () => {
 
   return (
     <Card className="bg-white border-0">
-      <ScrollArea className="h-120 w-92">
+      <ScrollArea
+        className={clsx(
+          "lg:w-92 w-[calc(100vw-30px)]",
+          cartItemsNumber <= 0 ? "h-60" : "h-120",
+        )}
+      >
         <CardHeader className="flex justify-between items-center">
           <CardTitle className="text-red font-bold">
             Your Cart ({cartItemsNumber})
@@ -28,7 +34,7 @@ const Cart = () => {
         </CardHeader>
         <CardContent>
           {cartItemsNumber <= 0 ? (
-            <Fragment>
+            <div className="h-full w-full flex flex-col items-center justify-center mt-10">
               {/* empty cart */}
               <img
                 src={EmptyCart}
@@ -38,7 +44,7 @@ const Cart = () => {
               <p className="text-rose-400 text-base font-semibold text-center mt-4">
                 Your added items will appear here
               </p>
-            </Fragment>
+            </div>
           ) : (
             <Fragment>
               {/* display cart items */}

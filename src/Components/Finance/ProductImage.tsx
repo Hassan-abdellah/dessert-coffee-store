@@ -14,7 +14,7 @@ const ProductImage = ({
   const { images, loading, error } = useImageLoader(src);
 
   if (loading) {
-    return <Skeleton className="w-82 h-64 rounded-md mb-4 bg-rose-50" />;
+    return <Skeleton className="rounded-md w-72 h-62 mb-4 bg-rose-50" />;
   }
 
   if (error) {
@@ -27,7 +27,18 @@ const ProductImage = ({
     );
   }
 
-  return <img src={images.desktop} alt={alt} className={`${className}`} />;
+  return (
+    <picture>
+      {/* Mobile */}
+      <source media="(max-width: 768px)" srcSet={images.mobile} />
+      {/* Tablet */}
+      <source media="(max-width: 1024px)" srcSet={images.tablet} />
+      {/* Desktop */}
+      <source srcSet={images.desktop} />
+      {/* Fallback */}
+      <img src={images.desktop} alt={alt} className={className} />
+    </picture>
+  );
 };
 
 export default ProductImage;

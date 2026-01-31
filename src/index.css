@@ -45,3 +45,9 @@
     @apply bg-rose-100 font-Red-Hat-Text;
   }
 }
+
+@layer utilities {
+  .container {
+    @apply max-w-[calc(100vw-30px)] xl:max-w-7xl mx-auto;
+  }
+}
