@@ -7,13 +7,13 @@ import IncreaseCartItemSVG from "../Icons/IncreaseCartItemSVG";
 import AddToCartSVG from "../Icons/AddToCartSVG";
 import clsx from "clsx";
 
-const ProductCard = ({ dessert }: { dessert: productType }) => {
+const ProductCard = ({ item }: { item: productType }) => {
   const { cartItems, addCartItem, updateCartItem } = useShopingCart();
 
   // check if the item is already in the cart
   const isItemInCart: cartItemType | undefined = useMemo(() => {
-    return cartItems.find((item) => item.item.name === dessert.name);
-  }, [cartItems, dessert.name]);
+    return cartItems.find((el) => el.item.name === item.name);
+  }, [cartItems, item.name]);
 
   return (
     <div className="rounded-lg">
@@ -25,8 +25,8 @@ const ProductCard = ({ dessert }: { dessert: productType }) => {
         )}
       >
         <ProductImage
-          src={dessert.image}
-          alt={dessert.name}
+          src={item.image}
+          alt={item.name}
           className="w-full h-full rounded-md"
         />
 
@@ -38,7 +38,7 @@ const ProductCard = ({ dessert }: { dessert: productType }) => {
               className="group cursor-pointer rounded-full border-2 border-white w-5 h-5 flex items-center justify-center hover:bg-white transition-colors"
               onClick={() =>
                 updateCartItem({
-                  productName: dessert.name,
+                  productName: item.name,
                   quantity: isItemInCart.quantity - 1,
                 })
               }
@@ -56,7 +56,7 @@ const ProductCard = ({ dessert }: { dessert: productType }) => {
               className="group cursor-pointer rounded-full border-2 border-white w-5 h-5 flex items-center justify-center hover:bg-white transition-colors"
               onClick={() =>
                 updateCartItem({
-                  productName: dessert.name,
+                  productName: item.name,
                   quantity: isItemInCart.quantity + 1,
                 })
               }
@@ -68,7 +68,7 @@ const ProductCard = ({ dessert }: { dessert: productType }) => {
           <button
             type="button"
             className="group absolute left-1/2 bottom-0 -translate-x-1/2 translate-y-1/2 text-rose-900 font-semibold cursor-pointer border border-red rounded-3xl px-4 py-2 bg-rose-50 flex items-center gap-1 transition-all hover:text-white hover:bg-red hover:drop-shadow-red hover:drop-shadow-sm"
-            onClick={() => addCartItem({ item: dessert, quantity: 1 })}
+            onClick={() => addCartItem({ item: item, quantity: 1 })}
           >
             <AddToCartSVG classNames="fill-red transition-colors group-hover:fill-white" />
             Add to Cart
@@ -78,9 +78,9 @@ const ProductCard = ({ dessert }: { dessert: productType }) => {
 
       {/* product content */}
       <div className="p-1 flex flex-col mt-6">
-        <p className="text-rose-400">{dessert.category}</p>
-        <h2 className="text-xl font-bold text-rose-900">{dessert.name}</h2>
-        <p className="text-red font-semibold">${dessert.price}</p>
+        <p className="text-rose-400">{item.category}</p>
+        <h2 className="text-xl font-bold text-rose-900">{item.name}</h2>
+        <p className="text-red font-semibold">${item.price}</p>
       </div>
     </div>
   );
