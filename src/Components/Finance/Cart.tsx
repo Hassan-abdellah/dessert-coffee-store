@@ -17,7 +17,7 @@ const Cart = () => {
   }, [cartItems]);
 
   return (
-    <Card className="bg-white border-0">
+    <Card className="bg-white border-0 sticky top-20 right-0 z-50">
       <ScrollArea
         className={clsx(
           "lg:w-92 w-[calc(100vw-30px)]",
