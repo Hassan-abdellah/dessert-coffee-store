@@ -50,4 +50,7 @@
   .container {
     @apply max-w-[calc(100vw-30px)] xl:max-w-7xl mx-auto;
   }
+  .grid-list {
+    @apply grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] place-items-center sm:place-items-start place-content-center gap-4;
+  }
 }

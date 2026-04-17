@@ -3,7 +3,7 @@ import ProductCard from "./ProductCard";
 
 const CoffeeList = () => {
   return (
-    <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))]  gap-4">
+    <div className="grid-list">
       {coffee.map((coffee) => (
         <ProductCard key={coffee.name} item={coffee} />
       ))}
