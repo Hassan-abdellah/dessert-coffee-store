@@ -1,6 +1,7 @@
 import { useImageLoader } from "@/hooks/useImageLoader";
 import type { prodcutImageType } from "@/types";
 import { Skeleton } from "../ui/skeleton";
+import { Fragment, useEffect, useRef, useState } from "react";
 
 const ProductImage = ({
   src,
@@ -11,33 +12,44 @@ const ProductImage = ({
   alt: string;
   className: string;
 }) => {
-  const { images, loading, error } = useImageLoader(src);
+  const { images } = useImageLoader(src);
 
-  if (loading) {
-    return <Skeleton className="rounded-md w-72 h-62 mb-4 bg-rose-50" />;
-  }
+  const [loaded, setLoaded] = useState(false);
+  const [error, setError] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
 
-  if (error) {
-    return (
-      <div
-        className={`${className} bg-red-50 flex items-center justify-center`}
-      >
-        <span className="text-red-500">Failed to load image</span>
-      </div>
-    );
-  }
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (imgRef.current?.complete) setLoaded(true);
+  }, []);
 
   return (
-    <picture>
-      {/* Mobile */}
-      <source media="(max-width: 768px)" srcSet={images.mobile} />
-      {/* Tablet */}
-      <source media="(max-width: 1024px)" srcSet={images.tablet} />
-      {/* Desktop */}
-      <source srcSet={images.desktop} />
-      {/* Fallback */}
-      <img src={images.desktop} alt={alt} className={className} />
-    </picture>
+    <Fragment>
+      {!loaded && <Skeleton className="w-82 h-82 rounded-none bg-gray-100" />}
+
+      <picture>
+        {!error && (
+          <>
+            {/* Mobile */}
+            <source media="(max-width: 768px)" srcSet={images.mobile} />
+            {/* Tablet */}
+            <source media="(max-width: 1024px)" srcSet={images.tablet} />
+            {/* Desktop */}
+            <source srcSet={images.desktop} />
+          </>
+        )}
+
+        <img
+          ref={imgRef}
+          src={images.desktop}
+          alt={alt}
+          loading="lazy"
+          className={className}
+          onLoad={() => setLoaded(true)}
+          onError={() => setError(true)}
+        />
+      </picture>
+    </Fragment>
   );
 };
 

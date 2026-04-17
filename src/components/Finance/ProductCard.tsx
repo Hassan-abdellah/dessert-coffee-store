@@ -20,7 +20,7 @@ const ProductCard = ({ item }: { item: productType }) => {
       {/* product image */}
       <div
         className={clsx(
-          "relative rounded-md w-72 h-62 transition-all duration-150",
+          "relative rounded-md transition-all duration-150",
           isItemInCart ? "ring-2 ring-red" : "",
         )}
       >
